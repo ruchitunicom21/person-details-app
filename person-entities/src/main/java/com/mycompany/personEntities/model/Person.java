@@ -1,5 +1,7 @@
 package com.mycompany.personEntities.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -19,7 +21,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "person")
-public class Person {
+public class Person implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,8 +43,15 @@ public class Person {
 	@JsonProperty("favourite_colour")
 	private String favouriteColour;
 
-	@Column(name = "hobby")
-	@OneToMany(targetEntity=Hobby.class, mappedBy="person", fetch=FetchType.EAGER)
-	private List<Hobby> hobby;
+
+	@ManyToMany(cascade = {
+			CascadeType.PERSIST,
+			CascadeType.MERGE
+	})
+	@JoinTable(name = "person_hobby",
+			joinColumns = @JoinColumn(name = "person_id"),
+			inverseJoinColumns = @JoinColumn(name = "hobby_id")
+	)
+	private List<Hobby> hobby=new ArrayList<>();
 
 }

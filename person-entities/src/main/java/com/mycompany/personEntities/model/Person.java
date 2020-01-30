@@ -1,19 +1,16 @@
 package com.mycompany.personEntities.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
+
 
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
+@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
@@ -21,37 +18,31 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "person")
-public class Person implements Serializable{
+public class Person implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long personId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long personId;
 
-	@Column(name = "first_name")
-	@JsonProperty("first_name")
-	private String firstName;
+    @Column(name = "first_name")
+    @JsonProperty("first_name")
+    private String firstName;
 
-	@Column(name = "last_name")
-	@JsonProperty("last_name")
-	private String lastName;
+    @Column(name = "last_name")
+    @JsonProperty("last_name")
+    private String lastName;
 
-	@Column(name = "age")
-	@JsonProperty("age")
-	private int age;
-	
-	@Column(name = "favourite_colour")
-	@JsonProperty("favourite_colour")
-	private String favouriteColour;
+    @Column(name = "age")
+    @JsonProperty("age")
+    private int age;
 
+    @Column(name = "favorite_colour")
+    @JsonProperty("favorite_colour")
+    private String favoriteColour;
 
-	@ManyToMany(cascade = {
-			CascadeType.PERSIST,
-			CascadeType.MERGE
-	})
-	@JoinTable(name = "person_hobby",
-			joinColumns = @JoinColumn(name = "person_id"),
-			inverseJoinColumns = @JoinColumn(name = "hobby_id")
-	)
-	private List<Hobby> hobby=new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(name = "hobby")
+    @JsonProperty("hobby")
+    private List<String> hobby;
 
 }

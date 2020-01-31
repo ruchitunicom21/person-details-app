@@ -2,6 +2,7 @@ package com.mycompany.personEntities.model;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 
 import javax.persistence.*;
@@ -14,7 +15,6 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
 @ToString
 @Entity
 @Table(name = "person")
@@ -45,4 +45,33 @@ public class Person implements Serializable {
     @JsonProperty("hobby")
     private List<String> hobby;
 
+    @Override
+    public int hashCode() {
+
+        return firstName.hashCode()+lastName.hashCode()+age+favoriteColour.hashCode()+hobby.hashCode();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean isEqual=false;
+      if(obj instanceof Person){
+          Person person=(Person)obj;
+          if(person.getFirstName().equalsIgnoreCase(this.getFirstName()) &&
+                  person.getLastName().equalsIgnoreCase(this.getLastName()) &&
+                  person.getAge()==this.getAge() && person.getFavoriteColour().equalsIgnoreCase(this.getFavoriteColour())){
+              if(this.getHobby().size()==person.getHobby().size()){
+                  for(String hobby:this.getHobby()){
+                      if(person.getHobby().contains(hobby)==false){
+                          break;
+                      }else{isEqual=true;}
+
+                  }
+
+              }
+
+          }
+      }
+      return isEqual;
+    }
 }

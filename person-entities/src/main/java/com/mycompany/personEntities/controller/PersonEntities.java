@@ -72,22 +72,24 @@ public class PersonEntities {
 
 		List<String> list=new ArrayList<>();
 		ResponseEntity<List<String>> responseEntity=null;
-		try {
-			if(person.size()!=personIds.size()){
-				list.add("Size of Request body and personIds are not matching");
-				responseEntity=new ResponseEntity<>(list,HttpStatus.UNPROCESSABLE_ENTITY);
-			}else {
-				int i=0;
-				for (Long id : personIds) {
-					list .add(personServices.update(person.get("person").get(i), id));
-					i++;
-				}
-			}
-		} catch (Exception e) {
-			responseEntity=new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-			e.printStackTrace();
-		}
-		responseEntity=new ResponseEntity<>(list,HttpStatus.OK);
+        if(person.get("person").size()!=personIds.size()){
+            list.add("Size of Request body and personIds are not matching");
+            responseEntity=new ResponseEntity<>(list,HttpStatus.UNPROCESSABLE_ENTITY);
+        }else {
+            try {
+
+                    int i = 0;
+                    for (Long id : personIds) {
+                        list.add(personServices.update(person.get("person").get(i), id));
+                        i++;
+                    }
+
+            } catch (Exception e) {
+                responseEntity = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                e.printStackTrace();
+            }
+            responseEntity = new ResponseEntity<>(list, HttpStatus.OK);
+        }
 		return responseEntity;
 	}
 }

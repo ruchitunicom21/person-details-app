@@ -15,17 +15,17 @@ import java.util.Map;
 public class PersonUtil {
 
 
-    private static HashMap<Person,Long> hashMap=null;
+    private static HashMap<Long,Person> hashMap=null;
 
     @Autowired
     private PersonRepository personRepository;
 
-    public HashMap<Person,Long> getCache(){
+    public HashMap<Long,Person> getCache(){
         if(hashMap==null || hashMap.size()==0){
             List<Person> personList= (List<Person>) personRepository.findAll();
             hashMap=new HashMap<>();
             for(Person person:personList){
-                hashMap.put(person,person.getPersonId());
+                hashMap.put(person.getPersonId(),person);
             }
 
         }
@@ -37,8 +37,8 @@ public class PersonUtil {
             hashMap=getCache();
         }
         boolean isExisting=false;
-        for(Map.Entry<Person,Long> entry:hashMap.entrySet()){
-              if(entry.getKey().equals(person)){
+        for(Map.Entry<Long,Person> entry:hashMap.entrySet()){
+              if(entry.getValue().equals(person)){
                   isExisting=true;
                   break;
               }

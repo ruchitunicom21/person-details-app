@@ -1,0 +1,50 @@
+<form [formGroup]="personDetailsForm" (ngSubmit)="submit()">
+   <button type="button" (click)="addDetailsArray()">Add details</button>
+   
+  <div formArrayName="detailsArray">
+   <div *ngFor="let address of detailsArray.controls; let i=index">
+    <div [formGroupName]="i">
+	<label for="identifier">
+    ID:
+	<input id="identifier"type="hidden" formControlName="id">
+	</label>
+  <label>
+    First Name:
+    <input type="text" formControlName="first_name">
+  </label>
+
+  <label>
+    Last Name:
+    <input type="text" formControlName="last_name">
+  </label>
+
+  <label>
+    Age:
+    <input type="text" formControlName="age">
+  </label>
+
+    <label>
+    Favorite Colour:
+    <input type="text" formControlName="favorite_colour">
+  </label>
+  
+  <label>
+  Hobby:
+      <select multiple  formControlName="hobby">
+              <option value="">Choose your hobby</option>
+              <option *ngFor="let hobby of hobbyArray" [ngValue]="hobby" >{{hobby}}</option>
+            </select>
+			</label>
+			 
+			 
+			  <button type="button" (click)="deleteDetailsArray(i)">Remove</button>
+			 
+  
+
+  </div>
+  </div>
+</div>
+<button type="submit" >Submit</button>
+</form>
+
+

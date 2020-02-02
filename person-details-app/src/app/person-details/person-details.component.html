@@ -4,9 +4,9 @@
   <div formArrayName="detailsArray">
    <div *ngFor="let address of detailsArray.controls; let i=index">
     <div [formGroupName]="i">
-	<label for="identifier">
+	<label >
     ID:
-	<input id="identifier"type="hidden" formControlName="id">
+	<input type="text" formControlName="id">
 	</label>
   <label>
     First Name:
@@ -47,4 +47,37 @@
 <button type="submit" >Submit</button>
 </form>
 
+<br>
+<br>
 
+
+    <div >
+      
+    <span >Id</span>
+	&nbsp;&nbsp; 
+    <span>First Name</span>
+	&nbsp;&nbsp;
+    <span>Last Name</span>
+	&nbsp;&nbsp;
+	<span>Age</span>
+	&nbsp;&nbsp;
+	<span>Favorite Color</span>
+	&nbsp;&nbsp;
+	<span>Hobby</span>
+  </div>
+          <div  *ngFor="let personList of reponsePersonList">
+  <span>{{personList.personId}}</span>
+  &nbsp;&nbsp;
+  <span>{{personList.first_name}}</span>
+  &nbsp;&nbsp;
+  <span>{{personList.last_name}}</span>
+  &nbsp;&nbsp;
+  <span>{{personList.age}}</span>
+  &nbsp;&nbsp;
+  <span>{{personList.favorite_colour}}</span>
+  &nbsp;&nbsp;
+  <span>{{personList.hobby}}</span>
+  </div>
+      
+  
+  <div>

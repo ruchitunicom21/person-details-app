@@ -14,7 +14,7 @@ import {ApiCallService} from './api-call.service';
 export class PersonDetailsComponent implements OnInit {
 
 person:Person=null;
-reponsePerson:any[]=[];
+reponsePersonList:Person[]=[];
 personArray:any[]=[];
 
 hobbyArray: any= ['Swimming', 'Chess', 'Cricket', 'Football'];
@@ -67,12 +67,19 @@ submit() {
     
     this.personArray=[];
 
+   for(let j=0;j<this.detailsArray.length;j++){
+	     this.detailsArray.removeAt(j);
+   }
+ 
   }
 
   extractResponse(person:any){
 	  
-	  this.reponsePerson.push(person);
-	  let temp=this.personDetailsForm.get("detailsArray") as FormArray
+	  for(let i=0;i<person.length;i++){
+		    this.reponsePersonList.push(person[i]);
+	  }
+	
+	
 	  
   }
 }

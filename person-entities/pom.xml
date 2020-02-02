@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.mycompany.app</groupId>
 	<artifactId>person-entities</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>person-entities</name>
 	<description>Demo project for Spring Boot</description>
 
@@ -65,6 +65,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+
 	</build>
 
 </project>

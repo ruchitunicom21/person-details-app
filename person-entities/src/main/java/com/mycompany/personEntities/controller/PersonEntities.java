@@ -49,7 +49,7 @@ public class PersonEntities {
 			responseEntity=new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 			e.printStackTrace();
 		}
-		responseEntity=new ResponseEntity<>(list,HttpStatus.FORBIDDEN);
+		responseEntity=new ResponseEntity<>(list,HttpStatus.OK);
 		return responseEntity;
 	}
 	@RequestMapping(value="/persons",method = RequestMethod.GET)

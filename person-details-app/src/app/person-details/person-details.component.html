@@ -1,16 +1,19 @@
 
-<div  *ngFor="let message of responseMessage;">
-<div>{{message}}</div>
+<br>
+<div  *ngFor="let message of responseMessage;" style="background-color:Red">
+<div >{{message}}</div>
 </div>
+<br>
 <form [formGroup]="personDetailsForm" (ngSubmit)="submit()">
-   <button type="button" (click)="addDetailsArray()">Add details</button>
-   
+   <button type="button" (click)="addDetailsArray()">Add Text Fields</button>
+   <br>
+   <br>
   <div formArrayName="detailsArray">
    <div *ngFor="let address of detailsArray.controls; let i=index">
     <div [formGroupName]="i">
 	<label >
     ID:
-	<input type="text" formControlName="id">
+	<input type="text" formControlName="id" size="10" placeholder="Auto generated">
 	</label>
   <label>
     First Name:
@@ -24,7 +27,7 @@
 
   <label>
     Age:
-    <input type="text" formControlName="age">
+    <input type="text" formControlName="age" size="4">
   </label>
 
     <label>
@@ -39,51 +42,56 @@
               <option *ngFor="let hobby of hobbyArray" [ngValue]="hobby" >{{hobby}}</option>
             </select>
 			</label>
+			 <br>
+			 <br>
 			 
-			 
-			  <button type="button" (click)="deleteDetailsArray(i)">Remove</button>
+			  <button type="button" (click)="deleteDetailsArray(i)">Delete</button>
 			 
   
 
   </div>
   </div>
 </div>
-<button type="submit" >Insert</button>
-
-<button type="button" (click)="updatePerson()">Update</button>
+<br>
+<br>
+<div align="center">
+<button type="submit">Insert</button>
+&nbsp;
+<button type="button"  (click)="updatePerson()">Update</button>
+</div>
 </form>
 
 <br>
 <br>
 
 
-    <div >
+    <ul >
       
-    <span >Id</span>
-	&nbsp;&nbsp; 
-    <span>First Name</span>
-	&nbsp;&nbsp;
-    <span>Last Name</span>
-	&nbsp;&nbsp;
-	<span>Age</span>
-	&nbsp;&nbsp;
-	<span>Favorite Color</span>
-	&nbsp;&nbsp;
-	<span>Hobby</span>
-  </div>
-          <div  *ngFor="let personList of reponsePersonList">
-  <span>{{personList.personId}}</span>
-  &nbsp;&nbsp;
-  <span>{{personList.first_name}}</span>
-  &nbsp;&nbsp;
-  <span>{{personList.last_name}}</span>
-  &nbsp;&nbsp;
-  <span>{{personList.age}}</span>
-  &nbsp;&nbsp;
-  <span>{{personList.favorite_colour}}</span>
-  &nbsp;&nbsp;
-  <span>{{personList.hobby}}</span>
-  </div>
+    <li >Id</li>
+
+    <li>First Name</li>
+ 
+    <li>Last Name</li>
+	
+	<li>Age</li>
+	
+	<li>Favorite Color</li>
+	
+	<li>Hobby</li>
+  </ul>
+          <ul  *ngFor="let personList of reponsePersonList">
+  <li>{{personList.personId}}</li>
+  
+  <li>{{personList.first_name}}</li>
+   
+  <li>{{personList.last_name}}</li>
+  
+  <li>{{personList.age}}</li>
+ 
+  <li>{{personList.favorite_colour}}</li>
+  
+  <li>{{personList.hobby}}</li>
+  </ul>
       
   
   <div>

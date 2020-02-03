@@ -4,7 +4,7 @@ import {Person} from './person';
 import { Subscription } from 'rxjs';
 import {ApiCallService} from './api-call.service';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { Validators } from '@angular/forms';
 
 
 @Component({
@@ -23,11 +23,11 @@ hobbyArray: any= ['Swimming', 'Chess', 'Cricket', 'Football'];
  
  personDetailsForm = this.fb.group({
 	 id:[''],
-    first_name: [''],
-    last_name: [''],
-    age:[''],
-	favorite_colour:[''],
-	hobby:['']	,
+    first_name: ['',Validators.required],
+    last_name: ['',Validators.required],
+    age:['',Validators.required],
+	favorite_colour:['',Validators.required],
+	hobby:['',Validators.required]	,
 	 detailsArray: this.fb.array([
     this.newDetails()
   ])
@@ -43,12 +43,12 @@ constructor(private fb: FormBuilder,private apiCall : ApiCallService, private ro
   }
   newDetails(): FormGroup {
     return this.fb.group({
-		id:'',
-     first_name: '',
-    last_name: '',
-    age:'',
-	favorite_colour:'',
-	hobby:''	
+		id:[''],
+     first_name: ['',Validators.required],
+    last_name: ['',Validators.required],
+    age:['',Validators.required],
+	favorite_colour:['',Validators.required],
+	hobby:['',Validators.required]	
     })
   }
  
@@ -59,6 +59,7 @@ constructor(private fb: FormBuilder,private apiCall : ApiCallService, private ro
 deleteDetailsArray(i:number) {
 	let temp=this.personDetailsForm.get("detailsArray") as FormArray
     let selectedPersonId=temp.value[i].id;
+	if(selectedPersonId!=undefined && selectedPersonId!=""){
 	this.apiCall.deletePerson(selectedPersonId).subscribe(
 	message => 
 	{this.detailsArray.removeAt(i); 
@@ -70,10 +71,14 @@ deleteDetailsArray(i:number) {
 			
 		}
 	}}});
+	}else{
+		this.detailsArray.removeAt(i);
+	}
   
  
 }
 submit() {
+	if(this.detailsArray.status!="INVALID"){
 	let temp=this.personDetailsForm.get("detailsArray") as FormArray
     
 	for(let j=0;j<temp.value.length;j++){
@@ -83,11 +88,11 @@ submit() {
     this.apiCall.addPerson(this.personArray).subscribe(person => this.extractResponse(person))
     
     this.personArray=[];
-    this.responseMessage=[];
-   for(let j=0;j<this.detailsArray.length;j++){
-	     this.detailsArray.removeAt(j);
-   }
- 
+    this.responseMessage=["Insert Success"];
+this.reset();
+	}else{
+		this.responseMessage=["Please enter all the fields except ID to insert details."];
+	}
   }
   updatePerson(){
 	  let temp=this.personDetailsForm.get("detailsArray") as FormArray
@@ -118,9 +123,22 @@ submit() {
 	 })
     
     this.personArray=[];
+	this.reset();
 	  
   }
-
+  reset(){
+	     for(let j=0;j<this.detailsArray.length;j++){
+			 if(this.detailsArray.length>1){
+	     this.detailsArray.removeAt(j);
+			 }
+   }
+ this.detailsArray.controls.forEach(group =>{ group.get('id').reset();
+            group.get('first_name').reset();   
+			group.get('last_name').reset();
+			group.get('age').reset();
+			group.get('favorite_colour').reset();
+			group.get('hobby').reset();});
+  }
   extractResponse(person:any){
 	  if(person.person!=undefined && person instanceof Object){
 	  for(let i=0;i<person.person.length;i++){

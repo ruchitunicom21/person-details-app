@@ -4,7 +4,7 @@ import { HttpHeaders } from '@angular/common/http';
 import {Person} from './person';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
-
+import { environment } from 'src/environments/environment';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json'
@@ -23,7 +23,7 @@ handleErrorObservable (error: Response | any) {
   
    addPerson(person: Person[]):Observable<Person>{
 	  let objArray={"person":person};
-	  return this.http.post<Person>("/api/persons/", objArray, httpOptions)
+	  return this.http.post<Person>(environment.apiUrl+"/persons/", objArray, httpOptions)
     .pipe(
       catchError(this.handleErrorObservable)
     );
@@ -31,19 +31,19 @@ handleErrorObservable (error: Response | any) {
   
   getPerson() {
   // now returns an Observable of Config
-  return this.http.get<Person>('/api/persons');
+  return this.http.get<Person>(environment.apiUrl+'/persons');
 }
 deletePerson (id: number){
-  const url = `/api/persons/${id}`; // DELETE api/heroes/42
-  return this.http.delete(url, httpOptions)
+  const url = `/persons/${id}`; // DELETE api/heroes/42
+  return this.http.delete(environment.apiUrl+url, httpOptions)
     .pipe(
       catchError(this.handleErrorObservable)
     );
 }
 updatePerson (person: Person[], ids:string) {
-	const url = `/api/persons/${ids}`;
+	const url = `/persons/${ids}`;
 	 let objArray={"person":person};
-  return this.http.put<Person>(url, objArray,httpOptions)
+  return this.http.put<Person>(environment.apiUrl+url, objArray,httpOptions)
     .pipe(
       catchError(this.handleErrorObservable)
     );

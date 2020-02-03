@@ -57,6 +57,14 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+			"dev": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev.ts"
+                }
+              ]
             }
           }
         },
@@ -68,6 +76,9 @@
           "configurations": {
             "production": {
               "browserTarget": "person-details-app:build:production"
+            },
+			"dev": {
+              "browserTarget": "person-details-app:build:dev"
             }
           }
         },

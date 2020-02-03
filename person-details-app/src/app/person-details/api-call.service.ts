@@ -21,11 +21,31 @@ handleErrorObservable (error: Response | any) {
 } 
   constructor(private http: HttpClient) { }
   
-  public addPerson(person: Person[]):Observable<Person>{
+   addPerson(person: Person[]):Observable<Person>{
 	  let objArray={"person":person};
 	  return this.http.post<Person>("/api/persons/", objArray, httpOptions)
     .pipe(
       catchError(this.handleErrorObservable)
     );
   }
+  
+  getPerson() {
+  // now returns an Observable of Config
+  return this.http.get<Person>('/api/persons');
+}
+deletePerson (id: number){
+  const url = `/api/persons/${id}`; // DELETE api/heroes/42
+  return this.http.delete(url, httpOptions)
+    .pipe(
+      catchError(this.handleErrorObservable)
+    );
+}
+updatePerson (person: Person[], ids:string) {
+	const url = `/api/persons/${ids}`;
+	 let objArray={"person":person};
+  return this.http.put<Person>(url, objArray,httpOptions)
+    .pipe(
+      catchError(this.handleErrorObservable)
+    );
+}
 }

@@ -1,3 +1,7 @@
+
+<div  *ngFor="let message of responseMessage;">
+<div>{{message}}</div>
+</div>
 <form [formGroup]="personDetailsForm" (ngSubmit)="submit()">
    <button type="button" (click)="addDetailsArray()">Add details</button>
    
@@ -44,7 +48,9 @@
   </div>
   </div>
 </div>
-<button type="submit" >Submit</button>
+<button type="submit" >Insert</button>
+
+<button type="button" (click)="updatePerson()">Update</button>
 </form>
 
 <br>
